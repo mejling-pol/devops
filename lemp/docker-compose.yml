@@ -22,6 +22,7 @@ services:
 
     environment: 
       VIRTUAL_HOST: e-pelangithai.co.th,www.e-pelangithai.co.th
+      LETSENCRYPT_HOST: e-pelangithai.co.th,www.e-pelangithai.co.th
 
     volumes:
       - ./html/:/var/www/html
@@ -43,6 +44,22 @@ services:
       - MYSQL_DATABASE=devops_db
       - MYSQL_USER=devops
       - MYSQL_PASSWORD=devops101
+
+  pma:
+      container_name: lemp-phpmyadmin
+      image: phpmyadmin/phpmyadmin
+      restart: always
+      
+      networks:
+        - webproxy
+        - default
+      
+      environment:
+      VIRTUAL_HOST: mydb.e-pelangithai.co.th,mydb.www.e-pelangithai.co.th
+      LETSENCRYPT_HOST: mydb.e-pelangithai.co.th,mydb.www.e-pelangithai.co.th
+          
+      expose:
+        - "80"
 
 networks:
   default:
